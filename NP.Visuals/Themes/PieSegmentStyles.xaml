@@ -1,0 +1,106 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:NP.Visuals.Controls"
+                    xmlns:converters="clr-namespace:NP.Visuals.Converters">
+    <Style TargetType="controls:PieSegment">
+        <Setter Property="Width"
+                Value="{Binding Path=OuterRadius,   
+                                    Converter={x:Static converters:FactorConverter.TheDoubleConverter},
+                                    RelativeSource={RelativeSource Self}}" />
+        <Setter Property="Height"
+                Value="{Binding Path=OuterRadius,   
+                                    Converter={x:Static converters:FactorConverter.TheDoubleConverter},
+                                    RelativeSource={RelativeSource Self}}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Path Fill="{TemplateBinding Background}"
+                          HorizontalAlignment="Left"
+                          VerticalAlignment="Top"
+                          Margin="{Binding Path=OuterRadius, 
+                                               Converter={x:Static converters:ShiftFromTopLeftMarginConverter.TheInstance},
+                                               RelativeSource={RelativeSource TemplatedParent}}">
+                        <Path.Data>
+                            <CombinedGeometry GeometryCombineMode="Intersect">
+                                <CombinedGeometry.Geometry1>
+                                    <CombinedGeometry GeometryCombineMode="Exclude">
+                                        <CombinedGeometry.Geometry1>
+                                            <EllipseGeometry RadiusX="{Binding Path=OuterRadius, 
+                                                                                   RelativeSource={RelativeSource AncestorType=controls:PieSegment}}"
+                                                             RadiusY="{Binding Path=OuterRadius, 
+                                                                                   RelativeSource={RelativeSource AncestorType=controls:PieSegment}}" />
+                                        </CombinedGeometry.Geometry1>
+                                        <CombinedGeometry.Geometry2>
+                                            <EllipseGeometry RadiusX="{Binding Path=InnerRadius, 
+                                                                                   RelativeSource={RelativeSource AncestorType=controls:PieSegment}}"
+                                                             RadiusY="{Binding Path=InnerRadius, 
+                                                                                   RelativeSource={RelativeSource AncestorType=controls:PieSegment}}" />
+                                        </CombinedGeometry.Geometry2>
+                                    </CombinedGeometry>
+                                </CombinedGeometry.Geometry1>
+                                <CombinedGeometry.Geometry2>
+                                    <PathGeometry>
+                                        <PathFigure>
+                                            <PathFigure.Segments>
+                                                <LineSegment>
+                                                    <LineSegment.Point>
+                                                        <MultiBinding Converter="{x:Static converters:AngleToPointConverter.TheInstance}"
+                                                                      ConverterParameter="2">
+                                                            <Binding Path="StartAngle"
+                                                                     RelativeSource="{RelativeSource AncestorType=controls:PieSegment}" />
+                                                            <Binding Path="OuterRadius"
+                                                                     RelativeSource="{RelativeSource AncestorType=controls:PieSegment}" />
+                                                        </MultiBinding>
+                                                    </LineSegment.Point>
+                                                </LineSegment>
+                                                <LineSegment>
+                                                    <LineSegment.Point>
+                                                        <MultiBinding Converter="{x:Static converters:AngleToPointConverter.TheInstance}"
+                                                                      ConverterParameter="2">
+                                                            <Binding Path="StartAngle"
+                                                                     RelativeSource="{RelativeSource AncestorType=controls:PieSegment}" />
+                                                            <Binding Path="OuterRadius"
+                                                                     RelativeSource="{RelativeSource AncestorType=controls:PieSegment}" />
+                                                            <Binding Path="EndAngle"
+                                                                     RelativeSource="{RelativeSource AncestorType=controls:PieSegment}" />
+                                                            <Binding Source="0.333" />
+                                                        </MultiBinding>
+                                                    </LineSegment.Point>
+                                                </LineSegment>
+                                                <LineSegment>
+                                                    <LineSegment.Point>
+                                                        <MultiBinding Converter="{x:Static converters:AngleToPointConverter.TheInstance}"
+                                                                      ConverterParameter="2">
+                                                            <Binding Path="StartAngle"
+                                                                     RelativeSource="{RelativeSource AncestorType=controls:PieSegment}" />
+                                                            <Binding Path="OuterRadius"
+                                                                     RelativeSource="{RelativeSource AncestorType=controls:PieSegment}" />
+                                                            <Binding Path="EndAngle"
+                                                                     RelativeSource="{RelativeSource AncestorType=controls:PieSegment}" />
+                                                            <Binding Source="0.666" />
+                                                        </MultiBinding>
+                                                    </LineSegment.Point>
+                                                </LineSegment>
+                                                <LineSegment>
+                                                    <LineSegment.Point>
+                                                        <MultiBinding Converter="{x:Static converters:AngleToPointConverter.TheInstance}"
+                                                                      ConverterParameter="2">
+                                                            <Binding Path="EndAngle"
+                                                                     RelativeSource="{RelativeSource AncestorType=controls:PieSegment}" />
+                                                            <Binding Path="OuterRadius"
+                                                                     RelativeSource="{RelativeSource AncestorType=controls:PieSegment}" />
+                                                        </MultiBinding>
+                                                    </LineSegment.Point>
+                                                </LineSegment>
+                                            </PathFigure.Segments>
+                                        </PathFigure>
+                                    </PathGeometry>
+                                </CombinedGeometry.Geometry2>
+                            </CombinedGeometry>
+                        </Path.Data>
+                    </Path>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

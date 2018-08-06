@@ -1,0 +1,50 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:visuals="clr-namespace:NP.Visuals">
+    <Style TargetType="visuals:LabeledControl"
+           x:Key="TheBaseLabelControl">
+        <Setter Property="Padding"
+                Value="5, 0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="visuals:LabeledControl">
+                    <Grid VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid  Width="{TemplateBinding LabelPartWidth}">
+                            <TextBlock x:Name="TheLabel"
+                                       Text="{TemplateBinding TheLabel}"
+                                       Margin="{TemplateBinding Padding}"
+                                       HorizontalAlignment="Right"
+                                       VerticalAlignment="Center"
+                                       Foreground="{Binding Path=Foreground,
+                                                    RelativeSource={RelativeSource AncestorType=visuals:LabeledControl}}"/>
+                        </Grid>
+                        <ContentControl ContentTemplate="{TemplateBinding TheValueTemplate}"
+                                        Content="{TemplateBinding TheValue}"
+                                        Grid.Column="1"
+                                        Margin="5,0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="TheTextLabeledControl"
+           TargetType="visuals:LabeledControl"
+           BasedOn="{StaticResource TheBaseLabelControl}">
+        <Setter Property="TheValueTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}" 
+                               Foreground="{Binding Path=Foreground,
+                                                    RelativeSource={RelativeSource AncestorType=visuals:LabeledControl}}"/>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
