@@ -1,11 +1,5 @@
-﻿using NP.Paradigms;
-using NP.Utilities;
-using System;
-using System.Collections.Generic;
+﻿using NP.Utilities;
 using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 

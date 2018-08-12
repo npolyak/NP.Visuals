@@ -1,9 +1,11 @@
-﻿using System;
+﻿using NP.Visuals.Converters;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 
 namespace NP.Visuals
@@ -15,31 +17,35 @@ namespace NP.Visuals
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is double)
+            if (value is double d)
             {
-                return -((double)value);
+                return -d;
             }
 
-            if (value is decimal)
+            if (value is decimal v)
             {
-                return -((decimal)value);
+                return -v;
             }
 
-            if (value is float)
+            if (value is float f)
             {
-                return -((float)value);
+                return -f;
             }
 
-            if (value is int)
+            if (value is int i)
             {
-                return -((int)value);
+                return -i;
             }
 
-            if (value is long)
+            if (value is long l)
             {
-                return -((long)value);
+                return -l;
             }
 
+            if (value is Point p)
+            {
+                return p.Negative();
+            }
             return value;
         }
 

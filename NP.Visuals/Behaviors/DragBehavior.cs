@@ -1,226 +1,358 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls.Primitives;
+﻿using System.Windows;
 using System.Windows.Input;
+using NP.Visuals;
 
-namespace NP.Visuals
+namespace NP.Visuals.Behaviors
 {
-    public class DragBehavior : 
-        Freezable, 
-        IVisualBehavior
+    public class DragBehavior
     {
-        #region TheDraggedElement attached Property
-        public static FrameworkElement GetTheDraggedElement(DependencyObject obj)
+        public static Point DefaultStartBoundary { get; } = new Point();
+        public static Point DefaultEndBoundary { get; } = new Point(double.NaN, double.NaN);
+
+        #region AttachedToElement attached Property
+        private static FrameworkElement GetAttachedToElement(DependencyObject obj)
         {
-            return (FrameworkElement)obj.GetValue(TheDraggedElementProperty);
+            return (FrameworkElement)obj.GetValue(AttachedToElementPropertyKey.DependencyProperty);
         }
 
-        public static void SetTheDraggedElement(DependencyObject obj, FrameworkElement value)
+        private static void SetAttachedToElement(DependencyObject obj, FrameworkElement value)
         {
-            obj.SetValue(TheDraggedElementProperty, value);
+            obj.SetValue(AttachedToElementPropertyKey, value);
         }
 
-        public static readonly DependencyProperty TheDraggedElementProperty =
+        private static readonly DependencyPropertyKey AttachedToElementPropertyKey =
+        DependencyProperty.RegisterAttachedReadOnly
+        (
+            "AttachedToElement",
+            typeof(FrameworkElement),
+            typeof(DragBehavior),
+            new PropertyMetadata(null)
+        );
+        #endregion AttachedToElement attached Property
+
+        #region StartBoundaryPoint attached Property
+        public static Point GetStartBoundaryPoint(DependencyObject obj)
+        {
+            return (Point)obj.GetValue(StartBoundaryPointProperty);
+        }
+
+        public static void SetStartBoundaryPoint(DependencyObject obj, Point value)
+        {
+            obj.SetValue(StartBoundaryPointProperty, value);
+        }
+
+        public static readonly DependencyProperty StartBoundaryPointProperty =
         DependencyProperty.RegisterAttached
         (
-            "TheDraggedElement",
-            typeof(FrameworkElement),
+            "StartBoundaryPoint",
+            typeof(Point),
             typeof(DragBehavior),
-            new PropertyMetadata(null)
+            new PropertyMetadata(DefaultStartBoundary)
         );
-        #endregion TheDraggedElement attached Property
+        #endregion StartBoundaryPoint attached Property
 
-
-        #region TheDragDropCoordinator Property
-        public DragDropCoordinator TheDragDropCoordinator
+        #region EndBoundaryPoint attached Property
+        public static Point GetEndBoundaryPoint(DependencyObject obj)
         {
-            get;set;
-        }
-        #endregion TheDragDropCoordinator Property
-
-        protected FrameworkElement TheElement { get; private set; } = null;
-
-        public bool ShouldResetShift { get; set; } = false;
-
-        Popup ThePopup => TheMovingElement as Popup;
-
-        #region TheContainingElement Dependency Property
-        public FrameworkElement TheContainingElement
-        {
-            get { return (FrameworkElement)GetValue(TheContainingElementProperty); }
-            set { SetValue(TheContainingElementProperty, value); }
+            return (Point)obj.GetValue(EndBoundaryPointProperty);
         }
 
-        public static readonly DependencyProperty TheContainingElementProperty =
-        DependencyProperty.Register
+        public static void SetEndBoundaryPoint(DependencyObject obj, Point value)
+        {
+            obj.SetValue(EndBoundaryPointProperty, value);
+        }
+
+        public static readonly DependencyProperty EndBoundaryPointProperty =
+        DependencyProperty.RegisterAttached
         (
-            nameof(TheContainingElement),
-            typeof(FrameworkElement),
+            "EndBoundaryPoint",
+            typeof(Point),
             typeof(DragBehavior),
-            new PropertyMetadata(null)
+            new PropertyMetadata(DefaultEndBoundary)
         );
-        #endregion TheContainingElement Dependency Property
+        #endregion EndBoundaryPoint attached Property
 
-        #region TheMovingElement Dependency Property
-        public FrameworkElement TheMovingElement
+        #region BounceBackAtDragEnd attached Property
+        public static bool GetBounceBackAtDragEnd(DependencyObject obj)
         {
-            get { return (FrameworkElement)GetValue(TheMovingElementProperty); }
-            set { SetValue(TheMovingElementProperty, value); }
+            return (bool)obj.GetValue(BounceBackAtDragEndProperty);
         }
 
-        public static readonly DependencyProperty TheMovingElementProperty =
-        DependencyProperty.Register
+        public static void SetBounceBackAtDragEnd(DependencyObject obj, bool value)
+        {
+            obj.SetValue(BounceBackAtDragEndProperty, value);
+        }
+
+        public static readonly DependencyProperty BounceBackAtDragEndProperty =
+        DependencyProperty.RegisterAttached
         (
-            nameof(TheMovingElement),
+            "BounceBackAtDragEnd",
+            typeof(bool),
+            typeof(DragBehavior),
+            new PropertyMetadata(default(bool))
+        );
+        #endregion BounceBackAtDragEnd attached Property
+
+        #region DraggedElement attached Property
+        public static FrameworkElement GetDraggedElement(DependencyObject obj)
+        {
+            return (FrameworkElement)obj.GetValue(DraggedElementProperty);
+        }
+
+        public static void SetDraggedElement(DependencyObject obj, FrameworkElement value)
+        {
+            obj.SetValue(DraggedElementProperty, value);
+        }
+
+        public static readonly DependencyProperty DraggedElementProperty =
+        DependencyProperty.RegisterAttached
+        (
+            "DraggedElement",
             typeof(FrameworkElement),
             typeof(DragBehavior),
-            new PropertyMetadata(null)
+            new PropertyMetadata(null, OnDraggedElementChanged)
         );
-        #endregion TheMovingElement Dependency Property
 
-
-        public void Attach(FrameworkElement el)
+        private static void OnDraggedElementChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            el.MouseDown += _el_MouseDown;
+            FrameworkElement oldDraggedElement = e.OldValue as FrameworkElement;
+
+            if (oldDraggedElement != null)
+            {
+                SetAttachedToElement(oldDraggedElement, null);
+                oldDraggedElement.MouseDown -= OnMouseDown;
+            }
+
+            FrameworkElement draggedElement = GetDraggedElement(d);
+
+            if (draggedElement != null)
+            {
+                SetAttachedToElement(draggedElement, (FrameworkElement)d);
+                draggedElement.MouseDown += OnMouseDown;
+            }
         }
 
-        public void Detach(FrameworkElement el)
+        private static void OnMouseDown(object sender, MouseButtonEventArgs e)
         {
-            el.MouseDown -= _el_MouseDown;
-        }
+            FrameworkElement draggedElement = (FrameworkElement)sender;
 
-        protected virtual Point GetOriginalShift()
-        {
-            return AttachedProps.GetTheShift(TheMovingElement);
-        }
+            FrameworkElement attachedToElement = GetAttachedToElement(draggedElement);
 
-        protected virtual Point GetOriginalMousePosition(MouseButtonEventArgs e)
-        {
-            return e.GetPosition(TheContainingElement);
-        }
+            FrameworkElement draggedWithinElement =
+                GetDragContainerElement(attachedToElement);
 
-        Point _originalShift;
-        Point _originalMousePosition;
-
-        bool _isWithinDrag = false;
-        private void _el_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (TheMovingElement == null)
+            if (!draggedElement.CaptureMouse())
                 return;
 
-            TheElement = sender as FrameworkElement;
+            Point startDragPoint = e.GetPosition(draggedWithinElement);
+            SetStartDragPoint(attachedToElement, startDragPoint);
+            Point currentElementPoint = GetShift(attachedToElement);
+            SetStartElementPoint(attachedToElement, currentElementPoint);
+            Point startLocationWithinContainerElementPoint = draggedElement.TranslatePoint(new Point(), draggedWithinElement);
+            SetStartLocationWithinContainerElement(attachedToElement, startLocationWithinContainerElementPoint);
 
-            _isWithinDrag = true;
-            OnStartDrag(e);
+            draggedElement.MouseMove += DraggedElement_MouseMove;
+            draggedElement.MouseUp += DraggedElement_MouseUp;
+        }
 
-            SetTheDraggedElement(TheMovingElement, TheElement);
-            _originalShift = GetOriginalShift();
-            _originalMousePosition = GetOriginalMousePosition(e);
+        static FrameworkElement SetCurrentShift(object sender, MouseEventArgs e)
+        {
+            FrameworkElement draggedElement = (FrameworkElement)sender;
 
-            TheElement.CaptureMouse();
+            FrameworkElement attachedToElement = GetAttachedToElement(draggedElement);
 
-            Popup popup = TheElement as Popup;
+            FrameworkElement draggedWithinElement =
+                GetDragContainerElement(attachedToElement);
 
-            if (this.ThePopup != null)
+            Point currentPosition = e.GetPosition(draggedWithinElement);
+            Point startPosition = GetStartDragPoint(attachedToElement);
+            Point shift = currentPosition.Minus(startPosition);
+            Point initialElementPoint = GetStartElementPoint(attachedToElement);
+
+            Point totalShift = shift.Plus(initialElementPoint);
+
+            Point startBoundaryPoint = GetStartBoundaryPoint(attachedToElement);
+            Point endBoundaryPoint = GetEndBoundaryPoint(attachedToElement);
+
+            Point initialElementPointWithRespectToContainer =
+                GetStartLocationWithinContainerElement(attachedToElement);
+
+            Point totalShiftWithRespectToContainer = shift.Plus(initialElementPointWithRespectToContainer);
+
+            if ( (!startBoundaryPoint.Equals(DefaultStartBoundary)) ||
+                 (!endBoundaryPoint.Equals(DefaultEndBoundary)) )
             {
-                this.ThePopup.IsOpen = true;
+                Rect boundary = 
+                    new Rect
+                    (
+                        startBoundaryPoint.X, 
+                        startBoundaryPoint.Y, 
+                        endBoundaryPoint.X - startBoundaryPoint.X,
+                        endBoundaryPoint.Y - startBoundaryPoint.Y);
+
+                Point updateVector = 
+                    totalShiftWithRespectToContainer.BoundaryUpdate(boundary);
+
+                totalShiftWithRespectToContainer = totalShiftWithRespectToContainer.Plus(updateVector);
+
+                totalShift = totalShift.Plus(updateVector);
             }
 
-            this.TheDragDropCoordinator?.StartDrag(TheElement, TheContainingElement);
+            SetTotalShiftWithRespectToContainer(attachedToElement, totalShiftWithRespectToContainer);
+            SetShift(attachedToElement, totalShift);
 
-            TheElement.MouseMove += _el_MouseMove;
-            TheElement.MouseUp += _el_MouseUp;
-            TheElement.MouseWheel += TheElement_MouseWheel;
+            return draggedElement;
         }
 
-        private async void TheElement_MouseWheel(object sender, MouseWheelEventArgs e)
+        private static void DraggedElement_MouseMove(object sender, MouseEventArgs e)
         {
-            SetPosition(e);
-            await Task.Delay(500);
-
-            SetPosition(e);
+            SetCurrentShift(sender, e);
         }
 
-        public virtual void OnStartDrag(MouseButtonEventArgs e)
+        private static void DraggedElement_MouseUp(object sender, MouseButtonEventArgs e)
         {
+            FrameworkElement draggedElement = SetCurrentShift(sender, e);
 
-        }
+            bool bounceBack = GetBounceBackAtDragEnd(draggedElement);
 
-        protected virtual void ResetShift()
-        {
-            AttachedProps.SetTheShift(TheMovingElement, new Point());
-        }
-
-        private void _el_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            try
+            if (bounceBack)
             {
-                TheElement.ReleaseMouseCapture();
-                TheElement.MouseWheel -= TheElement_MouseWheel;
-                TheElement.MouseMove -= _el_MouseMove;
-                TheElement.MouseUp -= _el_MouseUp;
+                Point startElementPoint = GetStartElementPoint(draggedElement);
 
-                SetPosition(e);
-
-                if (ShouldResetShift)
-                    ResetShift();
-
-                if (this.ThePopup != null)
-                {
-                    this.ThePopup.IsOpen = false;
-                }
-
-                this.TheDragDropCoordinator?.EndDrag();
-
-                TheElement = null;
+                SetShift(draggedElement, startElementPoint);
             }
-            finally
-            {
-                SetTheDraggedElement(TheMovingElement, null);
 
-                _isWithinDrag = false;
-            }
+            draggedElement.ReleaseMouseCapture();
+            draggedElement.MouseMove -= DraggedElement_MouseMove;
+            draggedElement.MouseUp -= DraggedElement_MouseUp;
         }
+        #endregion DraggedElement attached Property
 
-        protected virtual void SetTheShift(Point shift)
+        #region DragContainerElement attached Property
+        public static FrameworkElement GetDragContainerElement(DependencyObject obj)
         {
-            AttachedProps.SetTheShift
-            (
-                TheMovingElement,
-                shift
-            );
+            return (FrameworkElement)obj.GetValue(DragContainerElementProperty);
         }
 
-        protected void SetPosition(MouseEventArgs e)
+        public static void SetDragContainerElement(DependencyObject obj, FrameworkElement value)
         {
-            if (!_isWithinDrag)
-                return;
-
-            Point currentMousePosition =
-                e.GetPosition(TheContainingElement);
-
-            Point delta = currentMousePosition.Minus(_originalMousePosition);
-
-            Point newShift = _originalShift.Plus(delta);
-
-            SetTheShift(newShift);
-
-            this.TheDragDropCoordinator?.MoveDragCue();
+            obj.SetValue(DragContainerElementProperty, value);
         }
 
-        private void _el_MouseMove(object sender, MouseEventArgs e)
+        public static readonly DependencyProperty DragContainerElementProperty =
+        DependencyProperty.RegisterAttached
+        (
+            "DragContainerElement",
+            typeof(FrameworkElement),
+            typeof(DragBehavior),
+            new PropertyMetadata(default(FrameworkElement))
+        );
+        #endregion DragContainerElement attached Property
+
+        #region StartDragPoint attached Property
+        public static Point GetStartDragPoint(DependencyObject obj)
         {
-            SetPosition(e);
+            return (Point)obj.GetValue(StartDragPointPropertyKey.DependencyProperty);
         }
 
-        protected override Freezable CreateInstanceCore()
+        private static void SetStartDragPoint(DependencyObject obj, Point value)
         {
-            return this;
+            obj.SetValue(StartDragPointPropertyKey, value);
         }
+
+        public static readonly DependencyPropertyKey StartDragPointPropertyKey =
+        DependencyProperty.RegisterAttachedReadOnly
+        (
+            "StartDragPoint",
+            typeof(Point),
+            typeof(DragBehavior),
+            new PropertyMetadata(new Point())
+        );
+        #endregion StartDragPoint attached Property
+
+        #region StartElementPoint attached Property
+        public static Point GetStartElementPoint(DependencyObject obj)
+        {
+            return (Point)obj.GetValue(StartElementPointPropertyKey.DependencyProperty);
+        }
+
+        private static void SetStartElementPoint(DependencyObject obj, Point value)
+        {
+            obj.SetValue(StartElementPointPropertyKey, value);
+        }
+
+        public static readonly DependencyPropertyKey StartElementPointPropertyKey =
+        DependencyProperty.RegisterAttachedReadOnly
+        (
+            "StartElementPoint",
+            typeof(Point),
+            typeof(DragBehavior),
+            new PropertyMetadata(new Point())
+        );
+        #endregion StartElementPoint attached Property
+
+        #region StartLocationWithinContainerElement attached Property
+        public static Point GetStartLocationWithinContainerElement(DependencyObject obj)
+        {
+            return (Point)obj.GetValue(StartLocationWithinContainerElementProperty);
+        }
+
+        public static void SetStartLocationWithinContainerElement(DependencyObject obj, Point value)
+        {
+            obj.SetValue(StartLocationWithinContainerElementProperty, value);
+        }
+
+        public static readonly DependencyProperty StartLocationWithinContainerElementProperty =
+        DependencyProperty.RegisterAttached
+        (
+            "StartLocationWithinContainerElement",
+            typeof(Point),
+            typeof(DragBehavior),
+            new PropertyMetadata(default(Point))
+        );
+        #endregion StartLocationWithinContainerElement attached Property
+
+        #region Shift attached Property
+        public static Point GetShift(DependencyObject obj)
+        {
+            return (Point)obj.GetValue(ShiftPropertyKey.DependencyProperty);
+        }
+
+        public static void SetShift(DependencyObject obj, Point value)
+        {
+            obj.SetValue(ShiftPropertyKey, value);
+        }
+
+        public static readonly DependencyPropertyKey ShiftPropertyKey =
+        DependencyProperty.RegisterAttachedReadOnly
+        (
+            "Shift",
+            typeof(Point),
+            typeof(DragBehavior),
+            new PropertyMetadata(new Point())
+        );
+        #endregion Shift attached Property
+
+
+        #region TotalShiftWithRespectToContainer attached Property
+        public static Point GetTotalShiftWithRespectToContainer(DependencyObject obj)
+        {
+            return (Point)obj.GetValue(TotalShiftWithRespectToContainerProperty);
+        }
+
+        public static void SetTotalShiftWithRespectToContainer(DependencyObject obj, Point value)
+        {
+            obj.SetValue(TotalShiftWithRespectToContainerProperty, value);
+        }
+
+        public static readonly DependencyProperty TotalShiftWithRespectToContainerProperty =
+        DependencyProperty.RegisterAttached
+        (
+            "TotalShiftWithRespectToContainer",
+            typeof(Point),
+            typeof(DragBehavior),
+            new PropertyMetadata(DefaultEndBoundary)
+        );
+        #endregion TotalShiftWithRespectToContainer attached Property
     }
 }

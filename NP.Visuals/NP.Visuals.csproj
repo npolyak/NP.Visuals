@@ -48,20 +48,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AttachedProps.cs" />
+    <Compile Include="Behaviors\ActualSizeBehavior.cs" />
     <Compile Include="Behaviors\BehaviorCollection.cs" />
     <Compile Include="Behaviors\ChannelToConsoleBehavior.cs" />
     <Compile Include="Behaviors\DPChangeDetectionBehavior.cs" />
     <Compile Include="Behaviors\DragBehavior.cs" />
-    <Compile Include="Behaviors\DragBehaviorWithSeparateOriginalShift.cs" />
-    <Compile Include="Behaviors\DragDropCoordinator.cs" />
-    <Compile Include="Behaviors\DropBehavior.cs" />
+    <Compile Include="Behaviors\EventConsumingBehavior.cs" />
     <Compile Include="Behaviors\ExposeElementBehavior.cs" />
     <Compile Include="Behaviors\InverseBinding.cs" />
     <Compile Include="Behaviors\IVisualBehavior.cs" />
-    <Compile Include="Behaviors\NonNegativeDragBehavior.cs" />
+    <Compile Include="Behaviors\SizeSettingBehavior.cs" />
     <Compile Include="Controls\NPGrid.cs" />
     <Compile Include="Controls\PanelWithArrow.cs" />
     <Compile Include="Controls\PieSegment.cs" />
+    <Compile Include="Converters\AddPointMultiConverter.cs" />
     <Compile Include="Converters\AngleConverter.cs" />
     <Compile Include="Converters\AngleToPointConverter.cs" />
     <Compile Include="Converters\BinaryConverter.cs" />
@@ -74,7 +74,7 @@
     <Compile Include="Converters\NegativeConverter.cs" />
     <Compile Include="Converters\NullToVisConverter.cs" />
     <Compile Include="Converters\ObjTypeToVisibilityConverter.cs" />
-    <Compile Include="Converters\PointToNonNegativeMarginConverter.cs" />
+    <Compile Include="Converters\PointToMarginConverter.cs" />
     <Compile Include="Converters\ShiftFromTopLeftMarginConverter.cs" />
     <Compile Include="Converters\SubtractMultiConverter.cs" />
     <Compile Include="Converters\ToPointMultiConverter.cs" />
@@ -95,7 +95,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="ToVisualPointConverter.cs" />
+    <Compile Include="Converters\ToVisualPointConverter.cs" />
     <Compile Include="UniformlySpreadingControl.cs" />
     <Compile Include="Utils\LogicalTreeUtils.cs" />
     <Compile Include="Utils\VisualTreeUtils.cs" />

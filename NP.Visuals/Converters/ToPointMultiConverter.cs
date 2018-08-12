@@ -16,18 +16,23 @@ namespace NP.Visuals.Converters
 
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (values.Length < 2)
-                return new Point(double.NaN, double.NaN);
-
-            if (values[0] is double X)
+            double x = double.NaN;
+            double y = double.NaN;
+            if ((values == null) || (values.Length == 0))
             {
-                if (values[1] is double Y)
-                {
-                    return new Point(X, Y);
-                }
+                return new Point(x, y); ;
             }
 
-            return new Point(double.NaN, double.NaN);
+            if (values[0] is double actualX)
+            {
+                x = actualX;
+            }
+
+            if ((values.Length > 1) && (values[1] is double actualY))
+            {
+                y = actualY;
+            }
+            return new Point(x, y);
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
