@@ -33,7 +33,6 @@ namespace NP.Visuals
         #endregion TheShift attached Property
 
 
-
         #region OriginalPosition attached Property
         public static Point GetOriginalPosition(DependencyObject obj)
         {

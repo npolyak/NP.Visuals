@@ -1,13 +1,14 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:visuals="clr-namespace:NP.Visuals">
-    <Style TargetType="visuals:LabeledControl"
+                    xmlns:visuals="clr-namespace:NP.Visuals"
+                    xmlns:visualControls="clr-namespace:NP.Visuals.Controls">
+    <Style TargetType="visualControls:LabeledControl"
            x:Key="TheBaseLabelControl">
         <Setter Property="Padding"
                 Value="5, 0" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="visuals:LabeledControl">
+                <ControlTemplate TargetType="visualControls:LabeledControl">
                     <Grid VerticalAlignment="Top">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -35,7 +36,7 @@
     </Style>
 
     <Style x:Key="TheTextLabeledControl"
-           TargetType="visuals:LabeledControl"
+           TargetType="visualControls:LabeledControl"
            BasedOn="{StaticResource TheBaseLabelControl}">
         <Setter Property="TheValueTemplate">
             <Setter.Value>
