@@ -4,7 +4,6 @@ namespace NP.Visuals.Behaviors
 {
     public class ActualSizeBehavior
     {
-
         #region IsSet attached Property
         public static bool GetIsSet(DependencyObject obj)
         {
@@ -46,14 +45,12 @@ namespace NP.Visuals.Behaviors
         }
         #endregion IsSet attached Property
 
-
         static void SetActualSize(object elObj)
         {
             FrameworkElement el = (FrameworkElement) elObj;
 
             SetActualSize(el, new Point(el.ActualWidth, el.ActualHeight));
         }
-
 
         #region ActualSize attached Property
         public static Point GetActualSize(DependencyObject obj)
