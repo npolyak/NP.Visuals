@@ -2,6 +2,27 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:visuals="clr-namespace:NP.Visuals"
                     xmlns:visualControls="clr-namespace:NP.Visuals.Controls">
+    <Style TargetType="visualControls:LabelContainer">
+        <Setter Property="BorderBrush"
+                Value="Black" />
+        <Setter Property="BorderThickness"
+                Value="1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="visualControls:LabelContainer">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            HorizontalAlignment="Stretch"
+                            Background="{TemplateBinding Background}">
+                        <TextBlock Text="{TemplateBinding TheLabel}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style TargetType="visualControls:LabeledControl"
            x:Key="TheBaseLabelControl">
         <Setter Property="Padding"

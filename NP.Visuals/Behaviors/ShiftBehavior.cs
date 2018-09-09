@@ -6,6 +6,28 @@ namespace NP.Visuals.Behaviors
 {
     public static class ShiftBehavior
     {
+        #region ForceOverrideExistingTransform attached Property
+        public static bool GetForceOverrideExistingTransform(DependencyObject obj)
+        {
+            return (bool)obj.GetValue(ForceOverrideExistingTransformProperty);
+        }
+
+        public static void SetForceOverrideExistingTransform(DependencyObject obj, bool value)
+        {
+            obj.SetValue(ForceOverrideExistingTransformProperty, value);
+        }
+
+        public static readonly DependencyProperty ForceOverrideExistingTransformProperty =
+        DependencyProperty.RegisterAttached
+        (
+            "ForceOverrideExistingTransform",
+            typeof(bool),
+            typeof(ShiftBehavior),
+            new PropertyMetadata(default(bool))
+        );
+        #endregion ForceOverrideExistingTransform attached Property
+
+
         #region Position attached Property
         public static Point GetPosition(DependencyObject obj)
         {
@@ -34,6 +56,16 @@ namespace NP.Visuals.Behaviors
 
             if (translateTransform == null)
             {
+                if (el.RenderTransform != Transform.Identity)
+                {
+                    bool forceOverrideExistingTransform = GetForceOverrideExistingTransform(el);
+
+                    if (!forceOverrideExistingTransform)
+                    {
+                        throw new Exception("ShiftBehavior usage Error: Render transform had already been set.");
+                    }
+                }
+
                 translateTransform = new TranslateTransform();
                 el.RenderTransform = translateTransform;
             }
