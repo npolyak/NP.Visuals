@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -136,11 +137,11 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\NP.Concepts\NP.Concepts.csproj">
-      <Project>{2EA8D043-51C1-4498-BD74-7F7F75C8739A}</Project>
+    <ProjectReference Include="..\NP.Concepts\NP.Concepts.csproj">
+      <Project>{2ea8d043-51c1-4498-bd74-7f7f75c8739a}</Project>
       <Name>NP.Concepts</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\NP.Utilities\NP.Utilities.csproj">
+    <ProjectReference Include="..\NP.Utilities\NP.Utilities.csproj">
       <Project>{503d6544-570d-4e07-9101-0f574624cb49}</Project>
       <Name>NP.Utilities</Name>
     </ProjectReference>
