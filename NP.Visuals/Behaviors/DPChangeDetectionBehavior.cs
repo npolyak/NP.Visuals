@@ -8,6 +8,24 @@ namespace NP.Visuals.Behaviors
     {
         public event Action PropChangedEvent;
 
+        public event Action<DependencyObject, DependencyProperty, object, object> DetailedPropChangedEvent;
+
+        public bool IsSuspended
+        {
+            get { return (bool)GetValue(IsSuspendedProperty); }
+            set { SetValue(IsSuspendedProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IsSuspended.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsSuspendedProperty =
+            DependencyProperty.Register
+            (
+                "IsSuspended", 
+                typeof(bool), 
+                typeof(DPChangeDetectionBehavior), 
+                new PropertyMetadata(false));
+
+
         #region TheTargetValue Dependency Property
         public object TheTargetValue
         {
@@ -26,12 +44,19 @@ namespace NP.Visuals.Behaviors
 
         private static void OnTargetValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((DPChangeDetectionBehavior)d).OnTargetValueChanged();
+            ((DPChangeDetectionBehavior)d).OnTargetValueChanged(e.OldValue);
         }
 
-        private void OnTargetValueChanged()
+        private void OnTargetValueChanged(object oldValue)
         {
+            if (IsSuspended)
+                return;
+
             this.PropChangedEvent?.Invoke();
+
+            object newValue = this.TheTargetValue;
+
+            this.DetailedPropChangedEvent?.Invoke(TheBindingSourceObject, TheDP, oldValue, newValue);
         }
         #endregion TheTargetValue Dependency Property
 

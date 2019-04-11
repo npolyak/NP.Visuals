@@ -287,5 +287,49 @@ namespace NP.Visuals
             new PropertyMetadata(null)
         );
         #endregion TheRelayObject attached Property
+
+
+        #region ExtraDataContext attached Property
+        public static object GetExtraDataContext(DependencyObject obj)
+        {
+            return obj.GetValue(ExtraDataContextProperty);
+        }
+
+        public static void SetExtraDataContext(DependencyObject obj, object value)
+        {
+            obj.SetValue(ExtraDataContextProperty, value);
+        }
+
+        public static readonly DependencyProperty ExtraDataContextProperty =
+        DependencyProperty.RegisterAttached
+        (
+            "ExtraDataContext",
+            typeof(object),
+            typeof(AttachedProps),
+            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.Inherits)
+        );
+        #endregion ExtraDataContext attached Property
+
+
+        #region AnotherExtraDataContext attached Property
+        public static object GetAnotherExtraDataContext(DependencyObject obj)
+        {
+            return (object)obj.GetValue(AnotherExtraDataContextProperty);
+        }
+
+        public static void SetAnotherExtraDataContext(DependencyObject obj, object value)
+        {
+            obj.SetValue(AnotherExtraDataContextProperty, value);
+        }
+
+        public static readonly DependencyProperty AnotherExtraDataContextProperty =
+        DependencyProperty.RegisterAttached
+        (
+            "AnotherExtraDataContext",
+            typeof(object),
+            typeof(AttachedProps),
+            new FrameworkPropertyMetadata(default(object), FrameworkPropertyMetadataOptions.Inherits)
+        );
+        #endregion AnotherExtraDataContext attached Property
     }
 }
