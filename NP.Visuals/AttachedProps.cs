@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace NP.Visuals
 {
@@ -331,5 +332,27 @@ namespace NP.Visuals
             new FrameworkPropertyMetadata(default(object), FrameworkPropertyMetadataOptions.Inherits)
         );
         #endregion AnotherExtraDataContext attached Property
+
+
+        #region IconGeometry attached Property
+        public static Geometry GetIconGeometry(DependencyObject obj)
+        {
+            return (Geometry)obj.GetValue(IconGeometryProperty);
+        }
+
+        public static void SetIconGeometry(DependencyObject obj, Geometry value)
+        {
+            obj.SetValue(IconGeometryProperty, value);
+        }
+
+        public static readonly DependencyProperty IconGeometryProperty =
+        DependencyProperty.RegisterAttached
+        (
+            "IconGeometry",
+            typeof(Geometry),
+            typeof(AttachedProps),
+            new PropertyMetadata(default(Geometry))
+        );
+        #endregion IconGeometry attached Property
     }
 }
