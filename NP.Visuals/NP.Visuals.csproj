@@ -91,6 +91,7 @@
     <Compile Include="Converters\MultiplyMultiValueConverter.cs" />
     <Compile Include="Converters\NegativeConverter.cs" />
     <Compile Include="Converters\NullToVisConverter.cs" />
+    <Compile Include="Converters\NumberToThicknessConverter.cs" />
     <Compile Include="Converters\ObjTypeToVisibilityConverter.cs" />
     <Compile Include="Converters\PointToMarginConverter.cs" />
     <Compile Include="Converters\ShiftFromTopLeftMarginConverter.cs" />
