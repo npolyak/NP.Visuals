@@ -16,7 +16,7 @@ namespace NP.Visuals.Utils
 
         static FontWeightConverter _fontWeightConverter = new FontWeightConverter();
 
-        public static Visibility ToVis(this bool? b, bool directOrInverse = true)
+        public static Visibility ToVis(this bool? b, bool directOrInverse = true, bool collapsedOrHidden = true)
         {
             if (b == null)
                 b = false;
@@ -24,7 +24,10 @@ namespace NP.Visuals.Utils
             if (!directOrInverse)
                 b = !b;
 
-            return (b == true) ? Visibility.Visible : Visibility.Collapsed;
+            Visibility falseValue =
+                collapsedOrHidden ? Visibility.Collapsed : Visibility.Hidden;
+
+            return (b == true) ? Visibility.Visible : falseValue;
         }
 
         public static string ToLongStr(this DependencyProperty dp)

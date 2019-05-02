@@ -80,6 +80,8 @@
     <Compile Include="Converters\AssembledConverter.cs" />
     <Compile Include="Converters\BinaryConverter.cs" />
     <Compile Include="Converters\BinaryToDoubleConverter.cs" />
+    <Compile Include="Converters\BoolConverter.cs" />
+    <Compile Include="Converters\BoolToGeometryConverter.cs" />
     <Compile Include="Converters\BoolToVisConverter.cs" />
     <Compile Include="Converters\BrushToColorConverter.cs" />
     <Compile Include="Converters\BrushToStringConverter.cs" />
