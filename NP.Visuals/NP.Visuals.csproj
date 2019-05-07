@@ -74,6 +74,7 @@
     <Compile Include="Controls\NPGrid.cs" />
     <Compile Include="Controls\PanelWithArrow.cs" />
     <Compile Include="Controls\PieSegment.cs" />
+    <Compile Include="Controls\SelectableItemControl.cs" />
     <Compile Include="Converters\AddPointMultiConverter.cs" />
     <Compile Include="Converters\AngleConverter.cs" />
     <Compile Include="Converters\AngleToPointConverter.cs" />
@@ -97,6 +98,7 @@
     <Compile Include="Converters\ObjTypeToVisibilityConverter.cs" />
     <Compile Include="Converters\PointToMarginConverter.cs" />
     <Compile Include="Converters\ShiftFromTopLeftMarginConverter.cs" />
+    <Compile Include="Converters\StringConverter.cs" />
     <Compile Include="Converters\SubtractMultiConverter.cs" />
     <Compile Include="Converters\PointConverters.cs" />
     <Compile Include="Converters\ToPointMultiConverter.cs" />

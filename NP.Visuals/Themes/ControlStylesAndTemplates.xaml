@@ -115,4 +115,83 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+
+    <Style x:Key="SelectableItemControlStyle"
+           TargetType="visualControls:SelectableItemControl">
+        <Setter Property="VerticalContentAlignment"
+                Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="visualControls:SelectableItemControl">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <ContentPresenter Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        <CheckBox IsChecked="{Binding Path=IsItemSelected, 
+                                                                  Mode=TwoWay, 
+                                                                  RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                  Margin="{TemplateBinding CheckBoxMargin}"
+                                  Grid.Column="1" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ItemsControlWithScrollViewerStyle"
+           TargetType="ItemsControl">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ItemsControl">
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                                  VerticalScrollBarVisibility="Auto">
+                        <ItemsPresenter x:Name="PART_Host" />
+                    </ScrollViewer>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="HorizontalGridSplitter"
+           TargetType="GridSplitter">
+        <Setter Property="HorizontalAlignment"
+                Value="Stretch" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+        <Setter Property="Height"
+                Value="5" />
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0.5,0"
+                                     EndPoint="0.5,1">
+                    <GradientStop Offset="0"
+                                  Color="Transparent" />
+                    <GradientStop Offset="0.39999"
+                                  Color="Transparent" />
+                    <GradientStop Offset="0.4"
+                                  Color="Black" />
+                    <GradientStop Offset="0.6"
+                                  Color="Black" />
+                    <GradientStop Offset="0.60001"
+                                  Color="Transparent" />
+                    <GradientStop Offset="1"
+                                  Color="Transparent" />
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
