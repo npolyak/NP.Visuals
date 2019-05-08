@@ -71,6 +71,7 @@
     <Compile Include="Behaviors\ShiftBehavior.cs" />
     <Compile Include="Behaviors\SizeSettingBehavior.cs" />
     <Compile Include="Controls\LabelContainer.cs" />
+    <Compile Include="Controls\MultiSelectWithSearchControl.cs" />
     <Compile Include="Controls\NPGrid.cs" />
     <Compile Include="Controls\PanelWithArrow.cs" />
     <Compile Include="Controls\PieSegment.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Converters\BoolToVisConverter.cs" />
     <Compile Include="Converters\BrushToColorConverter.cs" />
     <Compile Include="Converters\BrushToStringConverter.cs" />
+    <Compile Include="Converters\DoubleToGridLengthConverter.cs" />
     <Compile Include="Converters\FactorConverter.cs" />
     <Compile Include="Converters\FromVisualPointConverter.cs" />
     <Compile Include="Converters\InverseBoolConverter.cs" />
@@ -143,6 +145,10 @@
     <Page Include="Themes\ControlStylesAndTemplates.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\MultiSelectWithSearchControlStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\PieSegmentStyles.xaml">
       <Generator>MSBuild:Compile</Generator>

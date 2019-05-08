@@ -3,6 +3,12 @@
                     xmlns:visuals="clr-namespace:NP.Visuals"
                     xmlns:utils="clr-namespace:NP.Visuals.Utils"
                     xmlns:visualControls="clr-namespace:NP.Visuals.Controls">
+    <Style x:Key="BaseControlStyle"
+           TargetType="Control">
+        <Setter Property="FocusVisualStyle"
+                Value="{x:Null}" />
+    </Style>
+    
     <Style TargetType="visualControls:LabelContainer">
         <Setter Property="BorderBrush"
                 Value="Black" />
