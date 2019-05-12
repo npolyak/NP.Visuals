@@ -1,0 +1,93 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="clr-namespace:NP.Visuals.Converters"
+                    xmlns:controls="clr-namespace:NP.Visuals.Controls">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="ControlStylesAndTemplates.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    <Style x:Key="FoundItemStyle"
+           TargetType="ContentPresenter">
+        <Setter Property="Margin"
+                Value="0,2" />
+        <Setter Property="Visibility"
+                Value="{Binding Path=IsFoundBySearch, 
+                                Converter={x:Static converters:BoolToVisConverter.TheInstance}}" />
+    </Style>
+    <DataTemplate x:Key="SelectableItemDataTemplate">
+        <controls:SelectableItemControl Style="{StaticResource SelectableItemControlStyle}"
+                                        Content="{Binding Path=OriginalSearchableStr}"
+                                        IsItemSelected="{Binding Path=IsSelected, Mode=TwoWay}" />
+    </DataTemplate>
+
+    <Style x:Key="SelectableItemsControl"
+           TargetType="ItemsControl"
+           BasedOn="{StaticResource ItemsControlWithScrollViewerStyle}">
+        <Setter Property="ItemContainerStyle"
+                Value="{StaticResource FoundItemStyle}" />
+        <Setter Property="ItemTemplate"
+                Value="{StaticResource SelectableItemDataTemplate}" />
+    </Style>
+    
+    <Style x:Key="MultiSelectControlStyle"
+           TargetType="controls:MultiSelectWithSearchControl">
+        <Setter Property="SelectedPaneHeight"
+                Value="200" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:MultiSelectWithSearchControl">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="{Binding Path=SelectedPaneHeight, 
+                                                            Mode=TwoWay,
+                                                            Converter={x:Static converters:DoubleToGridLengthConverter.Instance}, 
+                                                            RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TextBlock FontSize="14"
+                                   Text="{TemplateBinding Title}"
+                                   FontWeight="Bold"
+                                   Margin="0,0,0,5" />
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Search: "
+                                       VerticalAlignment="Center" />
+                            <TextBox Height="21"
+                                     Text="{Binding Path=TheVM.SearchStr,
+                                                    Mode=TwoWay, 
+                                                    Delay=200, 
+                                                    RelativeSource={RelativeSource Mode=TemplatedParent},
+                                                    UpdateSourceTrigger=PropertyChanged}"
+                                     Grid.Column="1"
+                                     Padding="0,1,0,0"
+                                     HorizontalAlignment="Stretch"
+                                     VerticalAlignment="Center"
+                                     Margin="0,0,5,0" />
+                        </Grid>
+
+                        <ItemsControl ItemsSource="{Binding Path=TheVM.SelectedItemsToDisplay, 
+                                                            RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                      Style="{StaticResource SelectableItemsControl}"
+                                      Grid.Row="2"
+                                      Margin="0,5" />
+
+                        <GridSplitter Style="{StaticResource HorizontalGridSplitter}"
+                                      Grid.Row="3" />
+
+                        <ItemsControl ItemsSource="{Binding Path=TheVM.AllItemsToDisplay, 
+                                                            RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                      Style="{StaticResource SelectableItemsControl}"
+                                      Grid.Row="4"
+                                      Margin="0,5" />
+
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

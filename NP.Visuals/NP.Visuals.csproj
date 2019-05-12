@@ -90,11 +90,13 @@
     <Compile Include="Converters\DoubleToGridLengthConverter.cs" />
     <Compile Include="Converters\FactorConverter.cs" />
     <Compile Include="Converters\FromVisualPointConverter.cs" />
+    <Compile Include="Converters\HorizontalAlignmentToIconConverter.cs" />
     <Compile Include="Converters\InverseBoolConverter.cs" />
     <Compile Include="Converters\MarginMultiConverter.cs" />
     <Compile Include="Converters\MarginToShiftConverter.cs" />
     <Compile Include="Converters\MultiplyMultiValueConverter.cs" />
     <Compile Include="Converters\NegativeConverter.cs" />
+    <Compile Include="Converters\NullToBoolConverter.cs" />
     <Compile Include="Converters\NullToVisConverter.cs" />
     <Compile Include="Converters\NumberToThicknessConverter.cs" />
     <Compile Include="Converters\ObjTypeToVisibilityConverter.cs" />
@@ -104,9 +106,11 @@
     <Compile Include="Converters\SubtractMultiConverter.cs" />
     <Compile Include="Converters\PointConverters.cs" />
     <Compile Include="Converters\ToPointMultiConverter.cs" />
+    <Compile Include="Converters\ToSingleSelectableCollectionConverter.cs" />
     <Compile Include="Converters\ToStringConverter.cs" />
     <Compile Include="Converters\TypeToShortNameConverter.cs" />
     <Compile Include="Controls\LabeledControl.cs" />
+    <Compile Include="Converters\VerticalAlignmentToIconConverter.cs" />
     <Compile Include="PointExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -123,6 +127,7 @@
     </Compile>
     <Compile Include="Converters\ToVisualPointConverter.cs" />
     <Compile Include="UniformlySpreadingControl.cs" />
+    <Compile Include="Utils\AlignmentHelpers.cs" />
     <Compile Include="Utils\Icons.cs" />
     <Compile Include="Utils\LogicalTreeUtils.cs" />
     <Compile Include="Utils\PointConversionUtils.cs" />
