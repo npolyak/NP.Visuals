@@ -354,5 +354,50 @@ namespace NP.Visuals
             new PropertyMetadata(default(Geometry))
         );
         #endregion IconGeometry attached Property
+
+
+        #region TheCornerRadius attached Property
+        public static CornerRadius GetTheCornerRadius(DependencyObject obj)
+        {
+            return (CornerRadius)obj.GetValue(TheCornerRadiusProperty);
+        }
+
+        public static void SetTheCornerRadius(DependencyObject obj, CornerRadius value)
+        {
+            obj.SetValue(TheCornerRadiusProperty, value);
+        }
+
+        public static readonly DependencyProperty TheCornerRadiusProperty =
+        DependencyProperty.RegisterAttached
+        (
+            "TheCornerRadius",
+            typeof(CornerRadius),
+            typeof(AttachedProps),
+            new PropertyMetadata(default(CornerRadius))
+        );
+        #endregion TheCornerRadius attached Property
+
+
+        #region ContainedText attached Property
+        public static string GetContainedText(DependencyObject obj)
+        {
+            return (string)obj.GetValue(ContainedTextProperty);
+        }
+
+        public static void SetContainedText(DependencyObject obj, string value)
+        {
+            obj.SetValue(ContainedTextProperty, value);
+        }
+
+        public static readonly DependencyProperty ContainedTextProperty =
+        DependencyProperty.RegisterAttached
+        (
+            "ContainedText",
+            typeof(string),
+            typeof(AttachedProps),
+            new PropertyMetadata(default(string))
+        );
+        #endregion ContainedText attached Property
+
     }
 }

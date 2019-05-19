@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using NP.Utilities;
 
 namespace NP.Visuals.Utils
 {
@@ -64,6 +66,11 @@ namespace NP.Visuals.Utils
                 return str;
             }
 
+            if (type == typeof(bool))
+            {
+                return bool.Parse(str);
+            }
+
             if (type == typeof(byte))
             {
                 return byte.Parse(str);
@@ -105,6 +112,38 @@ namespace NP.Visuals.Utils
             }
 
             return str;
+        }
+
+        public static IEnumerable<DependencyPropertyDescriptor> GetAllDPs
+        (
+            this DependencyObject obj
+        )
+        {
+            var allProps = TypeDescriptor.GetProperties
+            (
+                obj,
+                new Attribute[] { new PropertyFilterAttribute(PropertyFilterOptions.All) }
+            )
+            .Cast<PropertyDescriptor>()
+            .Select(pd => DependencyPropertyDescriptor.FromProperty(pd))
+            .Where(pd => pd != null);
+
+            return allProps;
+        }
+
+
+        public static DependencyProperty GetDPFromStr(this string fullTypeName)
+        {
+            (string className, string dpName, _) =
+                fullTypeName.SplitFromTo(".", null, false);
+
+            if (className.IsNullOrEmpty())
+                return null;
+
+            Type type = 
+                ReflectionUtils.FindTypeByFullName(className.SubstrFromTo(null, ".", false));
+
+            return type.GetStaticFieldValue(dpName) as DependencyProperty;
         }
     }
 }

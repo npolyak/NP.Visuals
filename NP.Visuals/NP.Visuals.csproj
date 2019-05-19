@@ -22,7 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>latestmajor</LangVersion>
     <CodeAnalysisRuleSet />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -76,6 +76,7 @@
     <Compile Include="Controls\PanelWithArrow.cs" />
     <Compile Include="Controls\PieSegment.cs" />
     <Compile Include="Controls\SelectableItemControl.cs" />
+    <Compile Include="Controls\TextButton.cs" />
     <Compile Include="Converters\AddPointMultiConverter.cs" />
     <Compile Include="Converters\AngleConverter.cs" />
     <Compile Include="Converters\AngleToPointConverter.cs" />
@@ -83,11 +84,13 @@
     <Compile Include="Converters\BinaryConverter.cs" />
     <Compile Include="Converters\BinaryToDoubleConverter.cs" />
     <Compile Include="Converters\BoolConverter.cs" />
+    <Compile Include="Converters\BoolOrMultiValueConverter.cs" />
     <Compile Include="Converters\BoolToGeometryConverter.cs" />
     <Compile Include="Converters\BoolToVisConverter.cs" />
     <Compile Include="Converters\BrushToColorConverter.cs" />
     <Compile Include="Converters\BrushToStringConverter.cs" />
     <Compile Include="Converters\DoubleToGridLengthConverter.cs" />
+    <Compile Include="Converters\EnumTypeToEnumConverter.cs" />
     <Compile Include="Converters\FactorConverter.cs" />
     <Compile Include="Converters\FromVisualPointConverter.cs" />
     <Compile Include="Converters\HorizontalAlignmentToIconConverter.cs" />
@@ -101,6 +104,7 @@
     <Compile Include="Converters\NumberToThicknessConverter.cs" />
     <Compile Include="Converters\ObjTypeToVisibilityConverter.cs" />
     <Compile Include="Converters\PointToMarginConverter.cs" />
+    <Compile Include="Converters\PropEditorDataTemplateSelector.cs" />
     <Compile Include="Converters\ShiftFromTopLeftMarginConverter.cs" />
     <Compile Include="Converters\StringConverter.cs" />
     <Compile Include="Converters\SubtractMultiConverter.cs" />
@@ -128,9 +132,11 @@
     <Compile Include="Converters\ToVisualPointConverter.cs" />
     <Compile Include="UniformlySpreadingControl.cs" />
     <Compile Include="Utils\AlignmentHelpers.cs" />
+    <Compile Include="Utils\DependencyPropertyInfo.cs" />
     <Compile Include="Utils\Icons.cs" />
     <Compile Include="Utils\LogicalTreeUtils.cs" />
     <Compile Include="Utils\PointConversionUtils.cs" />
+    <Compile Include="Utils\SaveableRestorableTypes.cs" />
     <Compile Include="Utils\VisualTreeUtils.cs" />
     <Compile Include="Utils\VisualUtils.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
