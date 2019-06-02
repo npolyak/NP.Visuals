@@ -68,6 +68,7 @@
     <Compile Include="Behaviors\InverseBindingBehavior.cs" />
     <Compile Include="Behaviors\IVisualBehavior.cs" />
     <Compile Include="Behaviors\RoutedEventReactionBehavior.cs" />
+    <Compile Include="Behaviors\SearchBehavior.cs" />
     <Compile Include="Behaviors\ShiftBehavior.cs" />
     <Compile Include="Behaviors\SizeSettingBehavior.cs" />
     <Compile Include="Controls\LabelContainer.cs" />
@@ -84,7 +85,7 @@
     <Compile Include="Converters\BinaryConverter.cs" />
     <Compile Include="Converters\BinaryToDoubleConverter.cs" />
     <Compile Include="Converters\BoolConverter.cs" />
-    <Compile Include="Converters\BoolOrMultiValueConverter.cs" />
+    <Compile Include="Converters\BoolMultiValueConverters.cs" />
     <Compile Include="Converters\BoolToGeometryConverter.cs" />
     <Compile Include="Converters\BoolToVisConverter.cs" />
     <Compile Include="Converters\BrushToColorConverter.cs" />

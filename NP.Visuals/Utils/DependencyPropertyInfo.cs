@@ -14,7 +14,7 @@ namespace NP.Visuals.Utils
         string PropFullDisplayName { get; }
         Type PropertyType { get; }
         object DefaultVal { get; }
-        DependencyProperty SourceDP {get;}
+        DependencyProperty SourceDP { get; }
 
         bool IsDefault { get; }
         bool IsNotDefault { get; }
@@ -31,7 +31,7 @@ namespace NP.Visuals.Utils
 
         public DependencyObject SourceObj { get; }
 
-        public bool IsReadOnly => SourceDP.ReadOnly;
+        public virtual bool IsReadOnly => SourceDP.ReadOnly || (!IsSaveableType);
 
         public string PropName => SourceDP.Name;
 
@@ -42,6 +42,8 @@ namespace NP.Visuals.Utils
             IsAttached ? OwnerType.Name + "." + PropName : PropName;
 
         public Type PropertyType => SourceDP.PropertyType;
+
+        public bool IsSaveableType => PropertyType.IsSaveableRestorableType();
 
         public object DefaultVal => SourceDP.DefaultMetadata?.DefaultValue;
 
@@ -83,7 +85,7 @@ namespace NP.Visuals.Utils
 
         public DependencyObject SourceObj { get; }
 
-        public bool IsReadOnly => SourceDP.ReadOnly;
+        public virtual bool IsReadOnly => SourceDP.ReadOnly || (!IsSaveableType);
 
         public string PropName => SourceDP.Name;
 
@@ -94,6 +96,8 @@ namespace NP.Visuals.Utils
             IsAttached ? OwnerType.Name + "." + PropName : PropName;
 
         public Type PropertyType => SourceDP.PropertyType;
+
+        public bool IsSaveableType => PropertyType.IsSaveableRestorableType();
 
         public object DefaultVal => SourceDP.DefaultMetadata?.DefaultValue;
 

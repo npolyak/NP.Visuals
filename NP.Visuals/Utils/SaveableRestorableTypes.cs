@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 
@@ -22,7 +19,17 @@ namespace NP.Visuals.Utils
             typeof(Color),
             typeof(decimal),
             typeof(Thickness),
-            typeof(object)
+            typeof(Brush)
         };
+
+        public static bool IsSaveableRestorableType(this Type type)
+        {
+            return type.IsEnum || Types.Contains(type);
+        }
+
+        public static bool IsObjOfSaveableRestorableType(this object obj)
+        {
+            return obj.GetType().IsSaveableRestorableType();
+        }
     }
 }
