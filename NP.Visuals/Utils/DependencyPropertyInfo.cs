@@ -35,8 +35,7 @@ namespace NP.Visuals.Utils
 
         public string PropName => SourceDP.Name;
 
-        public string PropFullName =>
-            OwnerType.FullName + "." + PropName + "Property";
+        public string PropFullName => SourceDP.GetFullDPName();
 
         public string PropFullDisplayName =>
             IsAttached ? OwnerType.Name + "." + PropName : PropName;
@@ -70,6 +69,11 @@ namespace NP.Visuals.Utils
 
             Value = SourceObj.GetValue(SourceDP);
         }
+
+        public override string ToString()
+        {
+            return SourceDP.Name;
+        }
     }
 
     public class DependencyPropertyInfo : DependencyObject, IDependencyPropertyInfo, INotifyPropertyChanged
@@ -81,16 +85,17 @@ namespace NP.Visuals.Utils
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
+        public event Action<DependencyObject, DependencyProperty, object, object> SourceDPValueChangedEvent;
+
         public DependencyProperty SourceDP { get; }
 
         public DependencyObject SourceObj { get; }
 
-        public virtual bool IsReadOnly => SourceDP.ReadOnly || (!IsSaveableType);
+        public virtual bool IsReadOnly => SourceDP.ReadOnly;// || (!IsSaveableType);
 
         public string PropName => SourceDP.Name;
 
-        public string PropFullName =>
-            IsAttached ? OwnerType.FullName + "." + PropName : PropName;
+        public string PropFullName => SourceDP.GetFullDPName();
 
         public string PropFullDisplayName =>
             IsAttached ? OwnerType.Name + "." + PropName : PropName;
@@ -106,6 +111,8 @@ namespace NP.Visuals.Utils
         public bool IsNotDefault => !IsDefault;
 
         public bool IsAttached { get; }
+
+        public virtual bool IsSuspended => false;
 
         public BaseValueSource Source => 
             DependencyPropertyHelper.GetValueSource(SourceObj, SourceDP).BaseValueSource;
@@ -146,11 +153,16 @@ namespace NP.Visuals.Utils
 
         private static void OnValChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((DependencyPropertyInfo)d).OnPropChanged();
+            ((DependencyPropertyInfo)d).OnPropChanged(e.OldValue, e.NewValue);
         }
 
-        private void OnPropChanged()
+        private void OnPropChanged(object oldValue, object newValue)
         {
+            if (!IsSuspended)
+            {
+                SourceDPValueChangedEvent?.Invoke(SourceObj, SourceDP, oldValue, newValue);
+            }
+
             OnPropChanged(nameof(Source));
             OnPropChanged(nameof(IsDefault));
             OnPropChanged(nameof(IsNotDefault));

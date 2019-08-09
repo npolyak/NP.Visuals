@@ -71,6 +71,16 @@ namespace NP.Visuals.Converters
         }
     }
 
+    public class BoolAndMultiValueConveter : BoolAndMultiValueConverter<bool>
+    {
+        public static BoolAndMultiValueConveter Instance { get; } =
+            new BoolAndMultiValueConveter();
+
+        public BoolAndMultiValueConveter() : base(true, false)
+        {
+        }
+    }
+
     public class BoolOrToVisibilityMultiValueConveter : BoolOrMultiValueConverter<Visibility>
     {
         public static BoolOrToVisibilityMultiValueConveter Instance { get; } =

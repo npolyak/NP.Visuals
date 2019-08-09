@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 namespace NP.Visuals.Behaviors
 {
-    public class DPChangeDetectionBehavior : Freezable, IVisualBehavior
+    public class DPChangeDetectionBehavior : Freezable, IVisualBehavior, IDisposable
     {
         public event Action PropChangedEvent;
 
@@ -148,6 +148,41 @@ namespace NP.Visuals.Behaviors
         protected override Freezable CreateInstanceCore()
         {
             return this;
+        }
+
+        public DPChangeDetectionBehavior()
+        {
+
+        }
+
+        public void Dispose()
+        {
+            Detach(null);
+
+            if (OnPropChanged != null)
+            {
+                PropChangedEvent -= OnPropChanged;
+                OnPropChanged = null;
+            }
+        }
+
+        private Action OnPropChanged;
+
+        public DPChangeDetectionBehavior
+        (
+            DependencyObject sourceBindingObj,
+            DependencyProperty dp,
+            Action onPropChanged)
+        {
+            TheBindingSourceObject = sourceBindingObj;
+            TheDP = dp;
+
+            OnPropChanged = onPropChanged;
+
+            if (OnPropChanged != null)
+            {
+                PropChangedEvent += OnPropChanged;
+            }
         }
     }
 }

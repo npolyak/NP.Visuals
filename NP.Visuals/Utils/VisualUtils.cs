@@ -91,7 +91,7 @@ namespace NP.Visuals.Utils
                 if (string.IsNullOrEmpty(str))
                     return null;
 
-                Color color = (Color) ColorConverter.ConvertFromString(str);
+                Color color = (Color)ColorConverter.ConvertFromString(str);
 
                 return new SolidColorBrush(color);
             }
@@ -140,10 +140,18 @@ namespace NP.Visuals.Utils
             if (className.IsNullOrEmpty())
                 return null;
 
-            Type type = 
+            Type type =
                 ReflectionUtils.FindTypeByFullName(className.SubstrFromTo(null, ".", false));
 
             return type.GetStaticFieldValue(dpName) as DependencyProperty;
+        }
+
+        public static string GetFullDPName(this DependencyProperty dp)
+        {
+            if (dp == null)
+                return null;
+
+            return dp.OwnerType.FullName + '.' + dp.Name + "Property";
         }
     }
 }

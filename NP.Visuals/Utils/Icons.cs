@@ -68,6 +68,9 @@ namespace NP.Visuals.Utils
         public static Geometry Delete { get; } =
             Geometry.Parse("M0,1L3,1 3,0 9,0 9,1 12,1 12,2 0,2z M1,3L2,3 2,10 4,10 4,3 5,3 5,10 7,10 7,3 8,3 8,10 10,10 10,3 11,3 11,12 1,12zz");
 
+        public static Geometry XIcon { get; } =
+            Geometry.Parse("M13.46,12L19,17.54V19H17.54L12,13.46L6.46,19H5V17.54L10.54,12L5,6.46V5H6.46L12,10.54L17.54,5H19V6.46L13.46,12Z");
+
         public static Geometry ToIcon(this HorizontalAlignment horizontalAlignment)
         {
             switch(horizontalAlignment)
