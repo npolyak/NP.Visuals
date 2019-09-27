@@ -39,6 +39,9 @@ namespace NP.Visuals.Utils
 
         public static object GetDPValueFromStr(this DependencyProperty dp, string str)
         {
+            if (str == null)
+                return null;
+
             Type type = dp.PropertyType;
 
             if (type.IsEnum)

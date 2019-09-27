@@ -81,7 +81,7 @@ namespace NP.Paradigms.Windows
             return node.SelfAndDescendants(toChildren);
         }
 
-        public static IEnumerable<object> LogicalDescendats
+        public static IEnumerable<object> LogicalDescendants
         (
             this object node
         )

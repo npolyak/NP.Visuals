@@ -19,7 +19,9 @@ namespace NP.Visuals.Utils
             typeof(Color),
             typeof(decimal),
             typeof(Thickness),
-            typeof(Brush)
+            typeof(Brush),
+            typeof(FontWeight),
+            typeof(TextDecoration)
         };
 
         public static bool IsSaveableRestorableType(this Type type)
