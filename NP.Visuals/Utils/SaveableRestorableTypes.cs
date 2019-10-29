@@ -21,7 +21,8 @@ namespace NP.Visuals.Utils
             typeof(Thickness),
             typeof(Brush),
             typeof(FontWeight),
-            typeof(TextDecoration)
+            typeof(TextDecoration),
+            typeof(Point)
         };
 
         public static bool IsSaveableRestorableType(this Type type)

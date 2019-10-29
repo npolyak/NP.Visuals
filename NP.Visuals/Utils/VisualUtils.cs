@@ -18,6 +18,8 @@ namespace NP.Visuals.Utils
 
         static FontWeightConverter _fontWeightConverter = new FontWeightConverter();
 
+        static PointConverter _pointConverter = new PointConverter();
+
         public static Visibility ToVis(this bool? b, bool directOrInverse = true, bool collapsedOrHidden = true)
         {
             if (b == null)
@@ -112,6 +114,11 @@ namespace NP.Visuals.Utils
             if (type == typeof(FontWeight))
             {
                 return _fontWeightConverter.ConvertFromString(str);
+            }
+
+            if (type == typeof(Point))
+            {
+                return _pointConverter.ConvertFromString(str);
             }
 
             return str;

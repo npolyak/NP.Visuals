@@ -52,7 +52,7 @@ namespace NP.Paradigms.Windows
             this FrameworkElement node
         )
         {
-            return node.SelfAndDescendantsWithLevelInfo(toChildren);
+            return node.SelfAndDescendantsWithLevelInfo(null, toChildren);
         }
 
         public static IEnumerable<TreeNodeInfo<FrameworkElement>> VisualDescendantsWithLevelInfo

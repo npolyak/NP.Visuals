@@ -4,5 +4,6 @@
         <ResourceDictionary Source="/NP.Visuals;Component/Themes/ControlStylesAndTemplates.xaml" />
         <ResourceDictionary Source="/NP.Visuals;Component/Themes/PieSegmentStyles.xaml"/>
         <ResourceDictionary Source="/NP.Visuals;Component/Themes/MultiSelectWithSearchControlStyles.xaml" />
+        <ResourceDictionary Source="/NP.Visuals;Component/Themes/ItemsClockStyles.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

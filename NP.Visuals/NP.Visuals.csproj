@@ -66,13 +66,17 @@
     <Compile Include="Behaviors\DragDrop\DropPositionChooser.cs" />
     <Compile Include="Behaviors\EventConsumingBehavior.cs" />
     <Compile Include="Behaviors\ExposeElementBehavior.cs" />
+    <Compile Include="Behaviors\ImageSourceSettingBehavior.cs" />
     <Compile Include="Behaviors\InverseBinding.cs" />
     <Compile Include="Behaviors\InverseBindingBehavior.cs" />
     <Compile Include="Behaviors\IVisualBehavior.cs" />
+    <Compile Include="Behaviors\RotationTransformBehavior.cs" />
     <Compile Include="Behaviors\RoutedEventReactionBehavior.cs" />
     <Compile Include="Behaviors\SearchBehavior.cs" />
     <Compile Include="Behaviors\ShiftBehavior.cs" />
     <Compile Include="Behaviors\SizeSettingBehavior.cs" />
+    <Compile Include="Controls\ClockItem.cs" />
+    <Compile Include="Controls\ItemsClock.cs" />
     <Compile Include="Controls\LabelContainer.cs" />
     <Compile Include="Controls\MultiSelectWithSearchControl.cs" />
     <Compile Include="Controls\NPGrid.cs" />
@@ -88,6 +92,7 @@
     <Compile Include="Converters\BinaryToDoubleConverter.cs" />
     <Compile Include="Converters\BoolConverter.cs" />
     <Compile Include="Converters\BoolMultiValueConverters.cs" />
+    <Compile Include="Converters\BoolToDataTemplateConverter.cs" />
     <Compile Include="Converters\BoolToGeometryConverter.cs" />
     <Compile Include="Converters\BoolToVisConverter.cs" />
     <Compile Include="Converters\BrushToColorConverter.cs" />
@@ -163,6 +168,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Themes\ItemsClockStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\MultiSelectWithSearchControlStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -180,6 +189,10 @@
     <ProjectReference Include="$(SolutionDir)NP.Utilities\NP.Utilities.csproj">
       <Project>{503d6544-570d-4e07-9101-0f574624cb49}</Project>
       <Name>NP.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\NP.IconStrs\NP.IconStrs.csproj">
+      <Project>{c14bcd1e-c042-4169-aa82-207666127106}</Project>
+      <Name>NP.IconStrs</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

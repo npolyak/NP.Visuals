@@ -1,0 +1,60 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:visuals="clr-namespace:NP.Visuals"
+                    xmlns:utils="clr-namespace:NP.Visuals.Utils"
+                    xmlns:visualControls="clr-namespace:NP.Visuals.Controls">
+    <Style x:Key="ItemsClockStyle" 
+           TargetType="visualControls:ItemsClock">
+        <Setter Property="Width"
+                Value="{Binding Path=ActualHeight, RelativeSource={RelativeSource Mode=Self}}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="visualControls:ItemsClock">
+                    <Grid>
+                        <ItemsControl ItemsSource="{Binding Path=TheClockItems, 
+                                                            Mode=OneWay, 
+                                                            RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                      ItemTemplate="{TemplateBinding ItemDataTemplate}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <Grid />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+
+                        <Grid HorizontalAlignment="Center"
+                              VerticalAlignment="Stretch"
+                              Margin="65"
+                              RenderTransformOrigin="0.5,0.5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.RenderTransform>
+                                <RotateTransform Angle="{Binding Path=HandAngle, 
+                                                                 RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                            </Grid.RenderTransform>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Path Data="{Binding Source={x:Static utils:Icons.UpArrow}}"
+                                      Width="7"
+                                      Height="7"
+                                      Stretch="Fill"
+                                      StrokeThickness="1"
+                                      Stroke="Black"
+                                      Fill="Black" />
+                                <Grid Width="1"
+                                      Grid.Row="1"
+                                      VerticalAlignment="Stretch"
+                                      Background="Black" />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

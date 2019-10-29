@@ -61,7 +61,7 @@ namespace NP.Paradigms.Windows
             this object node
         )
         {
-            return node.SelfAndDescendantsWithLevelInfo(toChildren);
+            return node.SelfAndDescendantsWithLevelInfo(null, toChildren);
         }
 
         public static IEnumerable<TreeNodeInfo<object>> LogicalDescendantsWithLevelInfo
