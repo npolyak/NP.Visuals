@@ -112,6 +112,7 @@
     <Compile Include="Converters\NullToBoolConverter.cs" />
     <Compile Include="Converters\NullToVisConverter.cs" />
     <Compile Include="Converters\NumberToThicknessConverter.cs" />
+    <Compile Include="Converters\ObjToTypeConverter.cs" />
     <Compile Include="Converters\ObjTypeToVisibilityConverter.cs" />
     <Compile Include="Converters\PointToMarginConverter.cs" />
     <Compile Include="Converters\PropEditorDataTemplateSelector.cs" />
