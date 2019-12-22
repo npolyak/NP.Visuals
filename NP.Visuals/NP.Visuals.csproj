@@ -74,6 +74,7 @@
     <Compile Include="Behaviors\RoutedEventReactionBehavior.cs" />
     <Compile Include="Behaviors\SearchBehavior.cs" />
     <Compile Include="Behaviors\ShiftBehavior.cs" />
+    <Compile Include="Behaviors\SingleArgMethodCallingBehavior.cs" />
     <Compile Include="Behaviors\SizeSettingBehavior.cs" />
     <Compile Include="Controls\ClockItem.cs" />
     <Compile Include="Controls\ItemsClock.cs" />
