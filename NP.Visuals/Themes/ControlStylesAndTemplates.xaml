@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:visuals="clr-namespace:NP.Visuals"
                     xmlns:utils="clr-namespace:NP.Visuals.Utils"
+                    xmlns:converters="clr-namespace:NP.Visuals.Converters"
                     xmlns:visualControls="clr-namespace:NP.Visuals.Controls">
     <Style x:Key="BaseControlStyle"
            TargetType="Control">
@@ -278,4 +279,76 @@
 
     <Style TargetType="visualControls:TextButton"
            BasedOn="{StaticResource TextButtonStyle}" />
+
+    <!-- for NP.Concepts.ComponentFolders.ComponentDisplayMetadata class-->
+    <DataTemplate x:Key="DisplayMetadataTemplate">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Path Data="{Binding Path=Icon}"
+                  Stroke="Black"
+                  Stretch="Uniform"
+                  Width="20"
+                  Height="20"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center" />
+
+            <TextBlock Foreground="Black"
+                       Grid.Column="1"
+                       Text="{Binding Path=DisplayName}"
+                       VerticalAlignment="Center"
+                       FontSize="13"
+                       Margin="5,0,0,0" />
+        </Grid>
+    </DataTemplate>
+    
+    <Style x:Key="OpenCloseToggleButtonStyle"
+           TargetType="ToggleButton">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Grid x:Name="OpacityPanel"
+                              Background="Black"
+                              Opacity="0.05" />
+                        <Grid Margin="3"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center">
+                            <TextBlock FontSize="16"
+                                       LineHeight="16"
+                                       LineStackingStrategy="BlockLineHeight"
+                                       TextAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Text="+"
+                                       Visibility="{Binding Path=IsChecked, 
+                                                            Converter={x:Static converters:BoolToVisConverter.TheInverseInstance}, 
+                                                            RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                            <TextBlock FontSize="18"
+                                       LineHeight="18"
+                                       LineStackingStrategy="BlockLineHeight"
+                                       TextAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Text="-"
+                                       Visibility="{Binding Path=IsChecked, 
+                                                            Converter={x:Static converters:BoolToVisConverter.TheInstance}, 
+                                                            RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter TargetName="OpacityPanel"
+                                    Property="Opacity"
+                                    Value="0" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>
