@@ -51,5 +51,12 @@ namespace NP.Visuals.Utils
         {
             return el.ToRect().Contains(p);
         }
+
+        public static bool ContainsTranslatedPoint(this FrameworkElement el, Point positionWithRespectToEl1, UIElement el1)
+        {
+            Point positionWithRespectToEl = el1.TranslatePoint(positionWithRespectToEl1, el);
+
+            return el.Contains(positionWithRespectToEl);
+        }
     }
 }

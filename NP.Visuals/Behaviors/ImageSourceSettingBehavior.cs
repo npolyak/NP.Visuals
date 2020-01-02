@@ -1,5 +1,7 @@
 ﻿using NP.Utilities;
 using System;
+using System.IO;
+using System.Net.Cache;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -75,6 +77,34 @@ namespace NP.Visuals.Behaviors
         );
         #endregion TheImageSource attached Property
 
+
+        #region ResetTrigger attached Property
+        public static bool GetResetTrigger(DependencyObject obj)
+        {
+            return (bool)obj.GetValue(ResetTriggerProperty);
+        }
+
+        public static void SetResetTrigger(DependencyObject obj, bool value)
+        {
+            obj.SetValue(ResetTriggerProperty, value);
+        }
+
+        public static readonly DependencyProperty ResetTriggerProperty =
+        DependencyProperty.RegisterAttached
+        (
+            "ResetTrigger",
+            typeof(bool),
+            typeof(ImageSourceSettingBehavior),
+            new PropertyMetadata(default(bool), OnResetTriggerChanged)
+        );
+
+        private static void OnResetTriggerChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ResetImageSource(d, e);
+        }
+        #endregion ResetTrigger attached Property
+
+
         public static void ResetImageSource
         (
             DependencyObject dependencyObject, 
@@ -83,12 +113,12 @@ namespace NP.Visuals.Behaviors
             bool isImageSourceSettingBehaviorSet = 
                 GetIsImageSourceSettingBehaviorSet(dependencyObject);
 
+            Image image = (Image)dependencyObject;
+
             if (!isImageSourceSettingBehaviorSet)
             {
                 return;
             }
-
-            Image image = (Image)dependencyObject;
 
             string imageSourceStr = 
                 GetTheImageSource(dependencyObject);
@@ -103,11 +133,21 @@ namespace NP.Visuals.Behaviors
                 return;
             }
 
+            if (File.Exists(imageSourceStr))
+            {
+                imageSourceStr = Path.GetFullPath(imageSourceStr);
+            }
+
             Uri uri = new Uri(imageSourceStr, UriKind.RelativeOrAbsolute);
 
-            ImageSource imageSource = new BitmapImage(uri);
+            BitmapImage bitmapImage = new BitmapImage(uri);
 
-            image.Source = imageSource;
+            //bitmapImage.BeginInit();
+            ////bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+            //bitmapImage.UriSource = uri;
+            //bitmapImage.EndInit();
+
+            image.Source = bitmapImage;
         }
     }
 }
