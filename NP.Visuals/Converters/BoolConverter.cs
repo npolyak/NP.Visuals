@@ -41,4 +41,21 @@ namespace NP.Visuals.Converters
             return value;
         }
     }
+
+    public class BoolToDoubleConverter : BoolConverter<double>
+    {
+        public static BoolToDoubleConverter PositiveNegativeConverter { get; } =
+            new BoolToDoubleConverter(1, -1);
+
+        public BoolToDoubleConverter()
+        {
+
+        }
+
+        public BoolToDoubleConverter(double trueValue, double falseValue) : 
+            base(trueValue, falseValue)
+        {
+
+        }
+    }
 }

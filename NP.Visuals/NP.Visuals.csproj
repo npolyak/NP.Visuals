@@ -10,6 +10,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\NP.Concepts\NP.Concepts.csproj" />
     <ProjectReference Include="..\..\NP.IconStrs\NP.IconStrs.csproj" />
-    <ProjectReference Include="..\..\NP.Utilities\NP.Utilities_Core.csproj" />
+    <ProjectReference Include="..\..\NP.Utilities\NP.Utilities.csproj" />
   </ItemGroup>
 </Project>
