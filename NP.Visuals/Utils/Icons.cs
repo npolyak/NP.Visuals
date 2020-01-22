@@ -103,6 +103,9 @@ namespace NP.Visuals.Utils
         public static Geometry ConnectionPoints { get; } =
             Geometry.Parse(ConnectionPointsStr);
 
+        public static Geometry Lambda { get; } =
+            Geometry.Parse(LambdaStr);
+
         public static Geometry ToIcon(this HorizontalAlignment horizontalAlignment)
         {
             switch (horizontalAlignment)
