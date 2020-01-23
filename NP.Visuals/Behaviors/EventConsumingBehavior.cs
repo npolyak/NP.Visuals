@@ -31,8 +31,11 @@ namespace NP.Visuals.Behaviors
             FrameworkElement el = (FrameworkElement)d;
             RoutedEvent routedEvent = GetEventToConsume(el);
 
-            el.RemoveHandler(routedEvent, (RoutedEventHandler)OnEvent);
-            el.AddHandler(routedEvent, (RoutedEventHandler) OnEvent);
+            if (routedEvent != null)
+            {
+                el.RemoveHandler(routedEvent, (RoutedEventHandler)OnEvent);
+                el.AddHandler(routedEvent, (RoutedEventHandler)OnEvent);
+            }
         }
         #endregion EventToConsume attached Property
 
