@@ -399,5 +399,48 @@ namespace NP.Visuals
         );
         #endregion ContainedText attached Property
 
+
+        #region MouseOverOpacity attached Property
+        public static double GetMouseOverOpacity(DependencyObject obj)
+        {
+            return (double)obj.GetValue(MouseOverOpacityProperty);
+        }
+
+        public static void SetMouseOverOpacity(DependencyObject obj, double value)
+        {
+            obj.SetValue(MouseOverOpacityProperty, value);
+        }
+
+        public static readonly DependencyProperty MouseOverOpacityProperty =
+        DependencyProperty.RegisterAttached
+        (
+            "MouseOverOpacity",
+            typeof(double),
+            typeof(AttachedProps),
+            new PropertyMetadata(default(double))
+        );
+        #endregion MouseOverOpacity attached Property
+
+
+        #region MouseOverBackground attached Property
+        public static Brush GetMouseOverBackground(DependencyObject obj)
+        {
+            return (Brush)obj.GetValue(MouseOverBackgroundProperty);
+        }
+
+        public static void SetMouseOverBackground(DependencyObject obj, Brush value)
+        {
+            obj.SetValue(MouseOverBackgroundProperty, value);
+        }
+
+        public static readonly DependencyProperty MouseOverBackgroundProperty =
+        DependencyProperty.RegisterAttached
+        (
+            "MouseOverBackground",
+            typeof(Brush),
+            typeof(AttachedProps),
+            new PropertyMetadata(default(Brush))
+        );
+        #endregion MouseOverBackground attached Property
     }
 }

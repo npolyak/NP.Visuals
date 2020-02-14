@@ -303,10 +303,116 @@
                        Margin="5,0,0,0" />
         </Grid>
     </DataTemplate>
+
+    <Style x:Key="TextBlockBase"
+           TargetType="TextBlock">
+        <Setter Property="FontFamily"
+                Value="Segoe UI" />
+        <Setter Property="FontSize"
+                Value="14" />
+        <Setter Property="LineHeight"
+                Value="{Binding Path=FontSize, RelativeSource={RelativeSource Mode=Self}}" />
+        <Setter Property="LineStackingStrategy"
+                Value="BlockLineHeight" />
+        <Setter Property="TextAlignment"
+                Value="Center" />
+        <Setter Property="HorizontalAlignment"
+                Value="Center" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+    </Style>
+
+    <Style x:Key="TextBlockEmphasised"
+           TargetType="TextBlock"
+           BasedOn="{StaticResource TextBlockBase}">
+        <Setter Property="FontWeight"
+                Value="Bold" />
+    </Style>
+
+    <Style x:Key="SectionHeader"
+           TargetType="TextBlock"
+           BasedOn="{StaticResource TextBlockEmphasised}">
+        <Setter Property="FontSize"
+                Value="18" />
+        <Setter Property="HorizontalAlignment"
+                Value="Left" />
+    </Style>
+    
+    <Style x:Key="ButtonIconTextStyle"
+           TargetType="TextBlock"
+           BasedOn="{StaticResource TextBlockBase}">
+        <Setter Property="FontSize"
+                Value="16" />
+        <Setter Property="LineHeight"
+                Value="15" />
+    </Style>
+
+    <Style x:Key="ActiveControlStyle"
+           TargetType="ContentControl">
+        <Setter Property="Padding"
+                Value="3" />
+        <Setter Property="visuals:AttachedProps.MouseOverOpacity"
+                Value="0.05" />
+        <Setter Property="visuals:AttachedProps.MouseOverBackground"
+                Value="Black" />
+        <Setter Property="BorderBrush"
+                Value="{x:Null}" />
+        <Setter Property="BorderThickness"
+                Value="0" />
+        <Setter Property="Background"
+                Value="#FFEDEDED" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}">
+                        <Grid>
+                            <Grid x:Name="MouseOverPanel"
+                                  Background="{TemplateBinding visuals:AttachedProps.MouseOverBackground}"
+                                  Opacity="{TemplateBinding visuals:AttachedProps.MouseOverOpacity}" />
+                            <ContentPresenter Margin="{TemplateBinding Padding}"
+                                              Content="{TemplateBinding Content}"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}" />
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter TargetName="MouseOverPanel"
+                                    Property="Opacity"
+                                    Value="0" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     
     <Style x:Key="OpenCloseToggleButtonStyle"
-           TargetType="ToggleButton">
-        <Setter Property="Template">
+           TargetType="ToggleButton"
+           BasedOn="{StaticResource ActiveControlStyle}">
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Grid>
+                        <TextBlock Style="{StaticResource ButtonIconTextStyle}"
+                                   Text="+"
+                                   Visibility="{Binding Path=IsChecked, 
+                                                            Converter={x:Static converters:BoolToVisConverter.TheInverseInstance}, 
+                                                            RelativeSource={RelativeSource AncestorType=ToggleButton}}" />
+                        <TextBlock Style="{StaticResource ButtonIconTextStyle}"
+                                   Text="-"
+                                   Visibility="{Binding Path=IsChecked, 
+                                                            Converter={x:Static converters:BoolToVisConverter.TheInstance}, 
+                                                            RelativeSource={RelativeSource AncestorType=ToggleButton}}" />
+                    </Grid>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <!--<Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>
                     <Grid>
@@ -316,22 +422,12 @@
                         <Grid Margin="3"
                               HorizontalAlignment="Center"
                               VerticalAlignment="Center">
-                            <TextBlock FontSize="16"
-                                       LineHeight="16"
-                                       LineStackingStrategy="BlockLineHeight"
-                                       TextAlignment="Center"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
+                            <TextBlock Style="{StaticResource ButtonIconTextStyle}"
                                        Text="+"
                                        Visibility="{Binding Path=IsChecked, 
                                                             Converter={x:Static converters:BoolToVisConverter.TheInverseInstance}, 
                                                             RelativeSource={RelativeSource Mode=TemplatedParent}}" />
-                            <TextBlock FontSize="18"
-                                       LineHeight="18"
-                                       LineStackingStrategy="BlockLineHeight"
-                                       TextAlignment="Center"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
+                            <TextBlock Style="{StaticResource ButtonIconTextStyle}"
                                        Text="-"
                                        Visibility="{Binding Path=IsChecked, 
                                                             Converter={x:Static converters:BoolToVisConverter.TheInstance}, 
@@ -348,7 +444,7 @@
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
-        </Setter>
+        </Setter>-->
     </Style>
 
     <Style TargetType="visualControls:InOutArrowControl">

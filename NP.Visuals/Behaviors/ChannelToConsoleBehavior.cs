@@ -1,30 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using NP.Utilities;
+using System;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace NP.Visuals
 {
-    public class ChannelToConsoleBehavior : TextWriter, IVisualBehavior
+    public class ChannelToConsoleBehavior : ConsoleWriterBase, IVisualBehavior
     {
         TextBlock _textBlockToChannelConsoleOutputTo = null;
-
-        public override Encoding Encoding =>
-            Encoding.ASCII;
-
-        SynchronizationContext _syncContext = null;
 
         public void Attach(FrameworkElement el)
         {
             _textBlockToChannelConsoleOutputTo =
                 (TextBlock)el;
-
-            _syncContext = SynchronizationContext.Current;
 
             Console.SetOut(this);
         }
@@ -36,34 +25,9 @@ namespace NP.Visuals
             Console.SetOut(null);
         }
 
-        void PerformInSyncContext<T>(T val, Action<T> operation)
+        protected override void WriteString(string str)
         {
-            if (_syncContext != null)
-            {
-                _syncContext.Send((state) => operation(val), null);
-            }
-            else
-            {
-                operation(val);
-            }
-        }
-
-        public override void Write(char value)
-        {
-            PerformInSyncContext<char>
-            (
-                value,
-                (val) => _textBlockToChannelConsoleOutputTo.Text += val
-            );
-        }
-
-        public override void Write(string value)
-        {
-            PerformInSyncContext<string>
-            (
-                value,
-                (val) => _textBlockToChannelConsoleOutputTo.Text += val
-            );
+            _textBlockToChannelConsoleOutputTo.Text += str;
         }
     }
 }
