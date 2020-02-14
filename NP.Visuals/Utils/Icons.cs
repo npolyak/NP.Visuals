@@ -106,6 +106,12 @@ namespace NP.Visuals.Utils
         public static Geometry LambdaIcon { get; } =
             Geometry.Parse(LambdaStr);
 
+        public static Geometry SaveSettingsIcon { get; } =
+            Geometry.Parse(SaveSettingsStr);
+
+        public static Geometry ClearListIcon { get; } =
+            Geometry.Parse(ClearListStr);
+
         public static Geometry ToIcon(this HorizontalAlignment horizontalAlignment)
         {
             switch (horizontalAlignment)
