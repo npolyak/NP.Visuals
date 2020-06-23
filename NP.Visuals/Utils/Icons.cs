@@ -40,11 +40,11 @@ namespace NP.Visuals.Utils
         public static Geometry RightArrow { get; } =
             Geometry.Parse(RightArrowStr);
 
-        public static Geometry InputArrow { get; } =
-            Geometry.Parse(InputArrowStr);
+        public static Geometry StartArrow { get; } =
+            Geometry.Parse(StartArrowStr);
 
-        public static Geometry OutputArrow { get; } =
-            Geometry.Parse(OutputArrowStr);
+        public static Geometry EndArrow { get; } =
+            Geometry.Parse(EndArrowStr);
 
         public static Geometry TwoSidedHorizontalArrow { get; } =
             Geometry.Parse(TwoSidedHorizontalArrowStr);
@@ -111,6 +111,15 @@ namespace NP.Visuals.Utils
 
         public static Geometry ClearListIcon { get; } =
             Geometry.Parse(ClearListStr);
+
+        public static Geometry InOutIcon { get; } =
+            Geometry.Parse(InOutStr);
+
+        public static Geometry FunctionIcon { get; } =
+            Geometry.Parse(FunctionStr);
+
+        public static Geometry HorizontalArrowsBothWaysIcon { get; } =
+            Geometry.Parse(HorizontalArrowsBothWaysStr);
 
         public static Geometry ToIcon(this HorizontalAlignment horizontalAlignment)
         {

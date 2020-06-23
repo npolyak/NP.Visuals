@@ -135,12 +135,12 @@ namespace NP.Visuals.Behaviors
         #endregion TheCurrentObj Dependency Property
 
 
-        public void Attach(FrameworkElement obj)
+        public void Attach(FrameworkElement obj, bool _ = true)
         {
             this.TheCurrentObj = obj;
         }
 
-        public void Detach(FrameworkElement obj)
+        public void Detach(FrameworkElement obj, bool _ = true)
         {
             this.TheCurrentObj = null;
         }

@@ -76,7 +76,7 @@ namespace NP.Visuals
             dataContext.SetCompoundPropValue(PropName, val);
         }
 
-        public void Attach(FrameworkElement el)
+        public void Attach(FrameworkElement el, bool _ = true)
         {
             TheElement = el;
             SetDPDetection();
@@ -92,7 +92,7 @@ namespace NP.Visuals
             SetVal();
         }
 
-        public void Detach(FrameworkElement el)
+        public void Detach(FrameworkElement el, bool _ = true)
         {
             if (_dpDetectionBehavior != null)
             {

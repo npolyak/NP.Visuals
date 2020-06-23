@@ -23,7 +23,7 @@ namespace NP.Visuals.Converters
             if (str == null)
                 return str;
 
-            return str.SubstrFromTo(Separator, null, false);
+            return str.SubstrFromTo(Separator, "`", false);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

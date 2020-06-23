@@ -34,11 +34,6 @@ namespace NP.Visuals.Utils
             return (b == true) ? Visibility.Visible : falseValue;
         }
 
-        public static string ToLongStr(this DependencyProperty dp)
-        {
-            return dp.OwnerType.FullName + "." + dp.Name + "Property";
-        }
-
         public static object GetDPValueFromStr(this DependencyProperty dp, string str)
         {
             if (str == null)

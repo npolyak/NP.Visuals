@@ -24,7 +24,7 @@ namespace NP.Visuals
             _exposedElementName = exposedElementName;
         }
 
-        public void Attach(FrameworkElement el)
+        public void Attach(FrameworkElement el, bool _ = true)
         {
             _el = el;
             _el.LayoutUpdated += El_LayoutUpdated;
@@ -63,7 +63,7 @@ namespace NP.Visuals
             Attach(_el);
         }
 
-        public void Detach(FrameworkElement el)
+        public void Detach(FrameworkElement el, bool _ = true)
         {
             _el.LayoutUpdated -= El_LayoutUpdated;
         }

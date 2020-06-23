@@ -10,7 +10,7 @@ namespace NP.Visuals
     {
         TextBlock _textBlockToChannelConsoleOutputTo = null;
 
-        public void Attach(FrameworkElement el)
+        public void Attach(FrameworkElement el, bool _ = true)
         {
             _textBlockToChannelConsoleOutputTo =
                 (TextBlock)el;
@@ -18,7 +18,7 @@ namespace NP.Visuals
             Console.SetOut(this);
         }
 
-        public void Detach(FrameworkElement el)
+        public void Detach(FrameworkElement el, bool _ = true)
         {
             _textBlockToChannelConsoleOutputTo = null;
 

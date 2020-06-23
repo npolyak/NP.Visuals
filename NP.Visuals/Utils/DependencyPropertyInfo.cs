@@ -114,6 +114,8 @@ namespace NP.Visuals.Utils
 
         public virtual bool IsSuspended => false;
 
+        public override string ToString() => PropFullDisplayName;
+
         public BaseValueSource Source => 
             DependencyPropertyHelper.GetValueSource(SourceObj, SourceDP).BaseValueSource;
 
