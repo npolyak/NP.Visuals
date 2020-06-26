@@ -23,10 +23,14 @@ namespace NP.Visuals.Utils
         Type OwnerType { get; }
 
         object Value { get; }
+
+        public object TheBindingPoint { get; set; }
     }
 
     public class UnmodifiableDependencyPropertyInfo : IDependencyPropertyInfo
     {
+        public object TheBindingPoint { get => null; set { } }
+
         public DependencyProperty SourceDP { get; }
 
         public DependencyObject SourceObj { get; }
@@ -78,6 +82,7 @@ namespace NP.Visuals.Utils
 
     public class DependencyPropertyInfo : DependencyObject, IDependencyPropertyInfo, INotifyPropertyChanged
     {
+        public virtual object TheBindingPoint { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropChanged(string propName)
